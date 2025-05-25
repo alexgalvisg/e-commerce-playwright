@@ -5,7 +5,6 @@ export class ProductPage {
   readonly addToCartButton: Locator;
   readonly removeButton: Locator;
   readonly productName: Locator;
-  readonly productPrice: Locator;
 
     constructor(page: Page, productName: string) {
         this.page = page;
