@@ -1,3 +1,4 @@
+
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
@@ -14,6 +15,9 @@ steps:
   inputs:
     versionSpec: '20.x'
   displayName: 'Install Node.js'
+
+- script: npm init -y
+  displayName: 'crear package.js'
 
 - script: npm ci
   displayName: 'Install dependencies'
