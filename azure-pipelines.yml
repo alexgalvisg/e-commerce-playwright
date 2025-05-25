@@ -7,7 +7,7 @@ trigger:
 - main  # O la rama que uses
 
 pool:
-  name: 'slave-test-personal'  # Para build inicial, luego cambiarás por tu agente
+  name: 'Default'  # Para build inicial, luego cambiarás por tu agente
 
 steps:
 - task: NodeTool@0
