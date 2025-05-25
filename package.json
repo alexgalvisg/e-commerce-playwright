@@ -2,7 +2,11 @@
   "name": "e-comerce-playwright",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "test": "playwright test",
+    "install": "playwright install"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
