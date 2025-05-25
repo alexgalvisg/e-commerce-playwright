@@ -10,20 +10,33 @@ trigger:
 pool:
   name: 'Default'  # Para build inicial, luego cambiarás por tu agente
 
+
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+    versionSpec: '16.x'  # o la versión que uses
 
-- script: npm init -y
-  displayName: 'crear package.js'
+- script: npm install
+  displayName: 'Instalar dependencias'
 
-- script: npm ci
-  displayName: 'Install dependencies'
+- script: npx playwright install
+  displayName: 'Instalar Playwright'
 
 - script: npm run build
-  displayName: 'Build project'
+  displayName: 'Compilar TypeScript'
 
-- publish: $(System.DefaultWorkingDirectory)
-  artifact: drop
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: 'playwright-report/**/*.xml'
+    testRunTitle: 'Playwright Tests'
+    failTaskOnFailedTests: false
+  condition: succeededOrFailed()
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
