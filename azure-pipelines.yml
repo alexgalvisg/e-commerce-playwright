@@ -22,6 +22,9 @@ steps:
 - script: npm install
   displayName: 'Instalar dependencias'
 
+- script: npm install typescript --save-dev
+  displayName: 'Instalar TypeScript'
+
 - script: npx playwright install
   displayName: 'Instalar Playwright'
 
