@@ -28,6 +28,10 @@ steps:
     npm run build  
   displayName: 'Build project'
 
+- script: |
+    npm run install
+  displayName: 'Install Playwright browsers'
+
 
 - task: PublishBuildArtifacts@1
   inputs:
