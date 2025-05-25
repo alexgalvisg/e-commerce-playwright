@@ -12,34 +12,25 @@ pool:
 
 
 variables:
-  npm_config_cache: $(Pipeline.Workspace)/.npm
+  buildConfiguration: 'Release'
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'  # o la versión que uses
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
 
-- script: npm install
-  displayName: 'Instalar dependencias'
+- script: |
+    npm ci
+  displayName: 'Install dependencies'
 
-- script: npm install typescript --save-dev
-  displayName: 'Instalar TypeScript'
+- script: |
+    npm run build  # Solo si tienes build
+  displayName: 'Build project'
 
-- script: npx playwright install
-  displayName: 'Instalar Playwright'
-
-- script: npm run build
-  displayName: 'Compilar TypeScript'
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFiles: 'playwright-report/**/*.xml'
-    testRunTitle: 'Playwright Tests'
-    failTaskOnFailedTests: false
-  condition: succeededOrFailed()
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'  # Ajusta si es necesario
     ArtifactName: 'drop'
     publishLocation: 'Container'
